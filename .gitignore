@@ -1,1 +1,4 @@
 *~
+*.cm*
+rmath.ml
+rmath.mli
