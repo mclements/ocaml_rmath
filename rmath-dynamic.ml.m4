@@ -11,7 +11,7 @@ define(`FUNCTION6',`let tolower($2) = foreign ~from:library "$2" ($3 @-> $5 @-> 
 divert(`1')dnl
 open Ctypes
 open Foreign
-let library = Dl.dlopen ~filename:"/usr/lib/libRmath.so" ~flags:[]
+let library = Dl.dlopen ~filename:"LIBRMATH" ~flags:[]
 type test_alternative = TwoSided | Less | Greater
 include(`rmath-template.m4')dnl
 let imin2 = foreign ~from:library "imin2" (int @-> int @-> returning int)
