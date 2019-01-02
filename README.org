@@ -1,0 +1,256 @@
+#+title: =ocaml_rmath=: Ocaml foreign function interface library for the Rmath library
+#+author: Mark Clements
+
+#+OPTIONS: H:3 toc:nil num:nil
+
+* Outline
+
+This library provides dynamic and static bindings to the Rmath library. The interface uses code generated using m4.
+
+#+BEGIN_SRC emacs-lisp :results silent :exports none
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ocaml . t)
+   (sh . t)
+   (emacs-lisp . t)))
+#+END_SRC
+
+#+RESULTS:
+
+The test script is:
+
+#+BEGIN_SRC sh :results verbatim :exports both
+cat test.ml
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+open Rmath;;
+let printLn x = Printf.printf "%f\n" x;;
+let y = qnorm5 0.975 0.0 1.0 1 0 in 
+    printLn y;;
+let (y,s) = lgammafn_sign 3.0 in
+    printLn y;;
+let r = rmultinom 1000 [|0.1;0.2;0.7|] in
+    Printf.printf "(%i,%i,%i)\n" r.(0) r.(1) r.(2);;
+let p = poisson_test 10.0 12.0 1.0 TwoSided in
+    printLn p;;
+let p = poisson_test 10.0 8.0 1.0 TwoSided in
+    printLn p;;
+#+end_example
+
+We can run this using dynamic linking:
+
+#+BEGIN_SRC sh :results verbatim :exports both
+make dynamic
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+rm -f rmath.ml rmath.mli
+rm -f rmath.cm* rmath.o
+rm -f test.o test.cm*
+m4   rmath-dynamic.ml.m4 > rmath.ml
+ocamlfind ocamlc -linkpkg -package ctypes.foreign rmath.ml test.ml \
+	-cclib "`pkg-config --libs libRmath`"
+1.959964
+0.693147
+(89,212,699)
+0.665694
+0.474612
+#+end_example
+
+Or using static linking:
+
+#+BEGIN_SRC sh :results verbatim :exports both
+make static
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+rm -f rmath.ml rmath.mli
+rm -f rmath.cm* rmath.o
+rm -f test.o test.cm*
+m4   rmath-static.ml.m4 > rmath.ml
+m4   rmath.mli.m4 > rmath.mli
+ocamlopt -c rmath.mli
+ocamlfind ocamlopt -linkpkg -package ctypes.foreign rmath.ml test.ml \
+	-cclib "`pkg-config --libs libRmath`"
+1.959964
+0.693147
+(89,212,699)
+0.665694
+0.474612
+#+end_example
+
+The signature is:
+
+#+BEGIN_SRC ocaml :exports code
+type test_alternative = TwoSided | Less | Greater
+val m_e : float
+val m_log2e : float
+val m_log10e : float
+val m_ln2 : float
+val m_ln10 : float
+val m_pi : float
+val m_2pi : float
+val m_pi_2 : float
+val m_pi_4 : float
+val m_1_pi : float
+val m_2_pi : float
+val m_2_sqrtpi : float
+val m_sqrt2 : float
+val m_sqrt1_2 : float
+val m_sqrt_3 : float
+val m_sqrt_32 : float
+val m_log10_2 : float
+val m_sqrt_pi : float
+val m_1_sqrt_2pi : float
+val m_sqrt_2dpi : float
+val m_ln_2pi : float
+val m_ln_sqrt_pi : float
+val m_ln_sqrt_2pi : float
+val m_ln_sqrt_pid2 : float
+val r_pow : float -> float-> float
+val r_pow_di : float -> int-> float
+val norm_rand : unit -> float
+val unif_rand : unit -> float
+val exp_rand : unit -> float
+val pnorm5 : float -> float -> float -> int -> int -> float
+val qnorm5 : float -> float -> float -> int -> int -> float
+val dnorm4 : float -> float -> float -> int -> float
+val rnorm : float -> float-> float
+val punif : float -> float -> float -> int -> int -> float
+val qunif : float -> float -> float -> int -> int -> float
+val dunif : float -> float -> float -> int -> float
+val runif : float -> float-> float
+val pgamma : float -> float -> float -> int -> int -> float
+val qgamma : float -> float -> float -> int -> int -> float
+val dgamma : float -> float -> float -> int -> float
+val rgamma : float -> float-> float
+val log1pmx : float-> float
+val rf_log1pexp : float-> float
+val lgamma1p : float-> float
+val logspace_add : float -> float-> float
+val logspace_sub : float -> float-> float
+val pbeta : float -> float -> float -> int -> int -> float
+val qbeta : float -> float -> float -> int -> int -> float
+val dbeta : float -> float -> float -> int -> float
+val rbeta : float -> float-> float
+val plnorm : float -> float -> float -> int -> int -> float
+val qlnorm : float -> float -> float -> int -> int -> float
+val dlnorm : float -> float -> float -> int -> float
+val rlnorm : float -> float-> float
+val pchisq : float -> float -> int -> int -> float
+val qchisq : float -> float -> int -> int -> float
+val dchisq : float -> float -> int -> float
+val rchisq : float-> float
+val pnchisq : float -> float -> float -> int -> int -> float
+val qnchisq : float -> float -> float -> int -> int -> float
+val dnchisq : float -> float -> float -> int -> float
+val rnchisq : float -> float-> float
+val pf : float -> float -> float -> int -> int -> float
+val qf : float -> float -> float -> int -> int -> float
+val df : float -> float -> float -> int -> float
+val rf : float -> float-> float
+val pt : float -> float -> int -> int -> float
+val qt : float -> float -> int -> int -> float
+val dt : float -> float -> int -> float
+val rt : float-> float
+val pbinom : float -> float -> float -> int -> int -> float
+val qbinom : float -> float -> float -> int -> int -> float
+val dbinom : float -> float -> float -> int -> float
+val rbinom : float -> float-> float
+val pcauchy : float -> float -> float -> int -> int -> float
+val qcauchy : float -> float -> float -> int -> int -> float
+val dcauchy : float -> float -> float -> int -> float
+val rcauchy : float -> float-> float
+val pexp : float -> float -> int -> int -> float
+val qexp : float -> float -> int -> int -> float
+val dexp : float -> float -> int -> float
+val rexp : float-> float
+val pgeom : float -> float -> int -> int -> float
+val qgeom : float -> float -> int -> int -> float
+val dgeom : float -> float -> int -> float
+val rgeom : float-> float
+val phyper : float -> float -> float -> float -> int -> int -> float
+val qhyper : float -> float -> float -> float -> int -> int -> float
+val dhyper : float -> float -> float -> float -> int -> float
+val rhyper : float -> float -> float -> float
+val pnbinom : float -> float -> float -> int -> int -> float
+val qnbinom : float -> float -> float -> int -> int -> float
+val dnbinom : float -> float -> float -> int -> float
+val rnbinom : float -> float-> float
+val ppois : float -> float -> int -> int -> float
+val qpois : float -> float -> int -> int -> float
+val dpois : float -> float -> int -> float
+val rpois : float-> float
+val pweibull : float -> float -> float -> int -> int -> float
+val qweibull : float -> float -> float -> int -> int -> float
+val dweibull : float -> float -> float -> int -> float
+val rweibull : float -> float-> float
+val plogis : float -> float -> float -> int -> int -> float
+val qlogis : float -> float -> float -> int -> int -> float
+val dlogis : float -> float -> float -> int -> float
+val rlogis : float -> float-> float
+val pnbeta : float -> float -> float -> float -> int -> int -> float
+val qnbeta : float -> float -> float -> float -> int -> int -> float
+val dnbeta : float -> float -> float -> float -> int -> float
+val pnf : float -> float -> float -> float -> int -> int -> float
+val qnf : float -> float -> float -> float -> int -> int -> float
+val dnf : float -> float -> float -> float -> int -> float
+val pnt : float -> float -> float -> int -> int -> float
+val qnt : float -> float -> float -> int -> int -> float
+val dnt : float -> float -> float -> int -> float
+val ptukey : float -> float -> float -> float -> int -> int -> float
+val qtukey : float -> float -> float -> float -> int -> int -> float
+val pwilcox : float -> float -> float -> int -> int -> float
+val qwilcox : float -> float -> float -> int -> int -> float
+val dwilcox : float -> float -> float -> int -> float
+val rwilcox : float -> float-> float
+val psignrank : float -> float -> int -> int -> float
+val qsignrank : float -> float -> int -> int -> float
+val dsignrank : float -> float -> int -> float
+val rsignrank : float-> float
+val gammafn : float-> float
+val lgammafn : float-> float
+val psigamma : float -> float-> float
+val digamma : float-> float
+val trigamma : float-> float
+val tetragamma : float-> float
+val pentagamma : float-> float
+val beta : float -> float-> float
+val lbeta : float -> float-> float
+val choose : float -> float-> float
+val lchoose : float -> float-> float
+val bessel_i : float -> float -> float -> float
+val bessel_j : float -> float-> float
+val bessel_k : float -> float -> float -> float
+val bessel_y : float -> float-> float
+val fmax2 : float -> float-> float
+val fmin2 : float -> float-> float
+val sign : float-> float
+val fprec : float -> float-> float
+val fround : float -> float-> float
+val fsign : float -> float-> float
+val ftrunc : float-> float
+val cospi : float-> float
+val sinpi : float-> float
+val tanpi : float-> float
+val imin2 : int -> int -> int
+val imax2 : int -> int -> int
+val set_seed : int -> int -> unit
+val log1pexp : float -> float
+val get_seed : unit -> int * int
+val lgammafn_sign : float -> float * int
+val rmultinom : int -> float array -> int array
+val rf_log1pexp : float -> float
+val qgamma : float -> float -> float -> int -> int -> float
+val pgamma : float -> float -> float -> int -> int -> float
+val dgamma : float -> float -> float -> int -> float
+val poisson_ci : float -> float -> test_alternative -> float * float
+val poisson_test: float -> float -> float -> test_alternative -> float
+val for_loop : (int * 'a -> 'a) -> 'a -> int * int -> 'a
+val count : (int -> bool) -> int * int -> int
+#+end_src
+
