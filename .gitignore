@@ -6,3 +6,6 @@ swig.ml
 swig.mli
 swigp4.ml
 *.o
+README.tex
+README.pdf
+README.html
