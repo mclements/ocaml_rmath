@@ -13,7 +13,7 @@ dynamic: clean rmath-dynamic.ml.m4 rmath.mli.m4 test.ml
 	@./a.out
 	@rm a.out
 
-static: clean rmath.ml.m4 rmath.mli.m4 test.ml
+static: clean rmath-static.ml.m4 rmath.mli.m4 test.ml
 	${M4} ${M4FLAGS} ${M4SCRIPT} rmath-static.ml.m4 > rmath.ml
 	${M4} ${M4FLAGS} ${M4SCRIPT} rmath.mli.m4 > rmath.mli
 	ocamlopt -c rmath.mli
@@ -24,4 +24,5 @@ static: clean rmath.ml.m4 rmath.mli.m4 test.ml
 
 clean:
 	rm -f rmath.ml rmath.mli
-
+	rm -f rmath.cm* rmath.o
+	rm -f test.o test.cm*

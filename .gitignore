@@ -2,3 +2,7 @@
 *.cm*
 rmath.ml
 rmath.mli
+swig.ml
+swig.mli
+swigp4.ml
+*.o
