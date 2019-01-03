@@ -87,170 +87,335 @@ The signature is:
 
 #+BEGIN_SRC ocaml :exports code
 type test_alternative = TwoSided | Less | Greater
+(* e *)
 val m_e : float
+(* log2(e) *)
 val m_log2e : float
+(* log10(e) *)
 val m_log10e : float
+(* ln(2) *)
 val m_ln2 : float
+(* ln(10) *)
 val m_ln10 : float
+(* pi *)
 val m_pi : float
+(* 2*pi *)
 val m_2pi : float
+(* pi/2 *)
 val m_pi_2 : float
+(* pi/4 *)
 val m_pi_4 : float
+(* 1/pi *)
 val m_1_pi : float
+(* 2/pi *)
 val m_2_pi : float
+(* 2/sqrt(pi) *)
 val m_2_sqrtpi : float
+(* sqrt(2) *)
 val m_sqrt2 : float
+(* 1/sqrt(2) *)
 val m_sqrt1_2 : float
+(* sqrt(3) *)
 val m_sqrt_3 : float
+(* sqrt(32) *)
 val m_sqrt_32 : float
+(* log10(2) *)
 val m_log10_2 : float
+(* sqrt(pi) *)
 val m_sqrt_pi : float
+(* 1/sqrt(2pi) *)
 val m_1_sqrt_2pi : float
+(* sqrt(2/pi) *)
 val m_sqrt_2dpi : float
+(* log(2*pi) *)
 val m_ln_2pi : float
+(* log(pi)/2 *)
 val m_ln_sqrt_pi : float
+(* log(2*pi)/2 *)
 val m_ln_sqrt_2pi : float
+(* log(pi/2)/2 *)
 val m_ln_sqrt_pid2 : float
+(* R_pow function. R_pow x y *)
 val r_pow : float -> float-> float
+(* R_pow_di function. R_pow_di x y *)
 val r_pow_di : float -> int-> float
+(* Normal random numbers. norm_rand() *)
 val norm_rand : unit -> float
+(* Uniform random numbers. unif_rand() *)
 val unif_rand : unit -> float
+(* Exponential random numbers. exp_rand() *)
 val exp_rand : unit -> float
+(* Normal cumulative density function. pnorm5 q mean sd lower log *)
 val pnorm5 : float -> float -> float -> int -> int -> float
+(* Normal quantile function. qnorm5 p mean sd lower log *)
 val qnorm5 : float -> float -> float -> int -> int -> float
+(* Normal probability density function. dnorm4 p mean sd log *)
 val dnorm4 : float -> float -> float -> int -> float
+(* Normal random numbers. rnorm mean sd *)
 val rnorm : float -> float-> float
+(* Uniform cumulative density function. punif q min max lower log *)
 val punif : float -> float -> float -> int -> int -> float
+(* Uniform quantile function. qunif p min max lower log *)
 val qunif : float -> float -> float -> int -> int -> float
+(* Uniform probability density function. dunif p min max log *)
 val dunif : float -> float -> float -> int -> float
+(* Uniform random numbers. runif min max *)
 val runif : float -> float-> float
+(* Gamma cumulative density function. pgamma q shape scale lower log *)
 val pgamma : float -> float -> float -> int -> int -> float
+(* Gamma quantile function. qgamma p shape scale lower log *)
 val qgamma : float -> float -> float -> int -> int -> float
+(* Gamma probability density function. dgamma p shape scale log *)
 val dgamma : float -> float -> float -> int -> float
+(* Gamma random numbers. rgamma shape scale *)
 val rgamma : float -> float-> float
+(* Accurate log(1+x) - x (care for small x). log1pmx x *)
 val log1pmx : float-> float
+(* log(1 + exp(x)). Rf_log1pexp x *)
 val rf_log1pexp : float-> float
+(* Accurate log(gamma(x+1)) for small x (0 < x < 0.5). lgamma1p x *)
 val lgamma1p : float-> float
+(* log (exp (logx) + exp (logy)). logspace_add logx logy *)
 val logspace_add : float -> float-> float
+(* log (exp (logx) - exp (logy)). logspace_sub logx logy *)
 val logspace_sub : float -> float-> float
+(* Beta cumulative density function. pbeta q shape1 shape2 lower log *)
 val pbeta : float -> float -> float -> int -> int -> float
+(* Beta quantile function. qbeta p shape1 shape2 lower log *)
 val qbeta : float -> float -> float -> int -> int -> float
+(* Beta probability density function. dbeta p shape1 shape2 log *)
 val dbeta : float -> float -> float -> int -> float
+(* Beta random numbers. rbeta shape1 shape2 *)
 val rbeta : float -> float-> float
+(* Log-normal cumulative density function. plnorm q meanlog sdlog lower log *)
 val plnorm : float -> float -> float -> int -> int -> float
+(* Log-normal quantile function. qlnorm p meanlog sdlog lower log *)
 val qlnorm : float -> float -> float -> int -> int -> float
+(* Log-normal probability density function. dlnorm p meanlog sdlog log *)
 val dlnorm : float -> float -> float -> int -> float
+(* Log-normal random numbers. rlnorm meanlog sdlog *)
 val rlnorm : float -> float-> float
+(* Chi-squared cumulative density function. pchisq q df lower log *)
 val pchisq : float -> float -> int -> int -> float
+(* Chi-squared quantile function. qchisq p df lower log *)
 val qchisq : float -> float -> int -> int -> float
+(* Chi-squared probability density function. dchisq p df log) *)
 val dchisq : float -> float -> int -> float
+(* Chi-squared random numbers. rchisq df *)
 val rchisq : float-> float
+(* Non-central chi-squared cumulative density function. pnchisq q df ncp lower log *)
 val pnchisq : float -> float -> float -> int -> int -> float
+(* Non-central chi-squared quantile function. qnchisq p df ncp lower log *)
 val qnchisq : float -> float -> float -> int -> int -> float
+(* Non-central chi-squared probability density function. dnchisq p df ncp log *)
 val dnchisq : float -> float -> float -> int -> float
+(* Non-central chi-squared random numbers. rnchisq df ncp *)
 val rnchisq : float -> float-> float
+(* F cumulative density function. pf q df1 df2 lower log *)
 val pf : float -> float -> float -> int -> int -> float
+(* F quantile function. qf p df1 df2 lower log *)
 val qf : float -> float -> float -> int -> int -> float
+(* F probability density function. df p df1 df2 log *)
 val df : float -> float -> float -> int -> float
+(* F random numbers. rf df1 df2 *)
 val rf : float -> float-> float
+(* T cumulative density function. pt q df lower log *)
 val pt : float -> float -> int -> int -> float
+(* T quantile function. qt p df lower log *)
 val qt : float -> float -> int -> int -> float
+(* T probability density function. dt p df log) *)
 val dt : float -> float -> int -> float
+(* T random numbers. rt df *)
 val rt : float-> float
+(* Binomial cumulative density function. pbinom q size prob lower log *)
 val pbinom : float -> float -> float -> int -> int -> float
+(* Binomial quantile function. qbinom p size prob lower log *)
 val qbinom : float -> float -> float -> int -> int -> float
+(* Binomial probability density function. dbinom p size prob log *)
 val dbinom : float -> float -> float -> int -> float
+(* Binomial random numbers. rbinom size prob *)
 val rbinom : float -> float-> float
+(* Cauchy cumulative density function. pcauchy q location scale lower log *)
 val pcauchy : float -> float -> float -> int -> int -> float
+(* Cauchy quantile function. qcauchy p location scale lower log *)
 val qcauchy : float -> float -> float -> int -> int -> float
+(* Cauchy probability density function. dcauchy p location scale log *)
 val dcauchy : float -> float -> float -> int -> float
+(* Cauchy random numbers. rcauchy location scale *)
 val rcauchy : float -> float-> float
+(* Exponential cumulative density function. pexp q rate lower log *)
 val pexp : float -> float -> int -> int -> float
+(* Exponential quantile function. qexp p rate lower log *)
 val qexp : float -> float -> int -> int -> float
+(* Exponential probability density function. dexp p rate log) *)
 val dexp : float -> float -> int -> float
+(* Exponential random numbers. rexp rate *)
 val rexp : float-> float
+(* Geometric cumulative density function. pgeom q prob lower log *)
 val pgeom : float -> float -> int -> int -> float
+(* Geometric quantile function. qgeom p prob lower log *)
 val qgeom : float -> float -> int -> int -> float
+(* Geometric probability density function. dgeom p prob log) *)
 val dgeom : float -> float -> int -> float
+(* Geometric random numbers. rgeom prob *)
 val rgeom : float-> float
+(* Hypergeometric cumulative density function. phyper q m n k lower log *)
 val phyper : float -> float -> float -> float -> int -> int -> float
+(* Hypergeometric quantile function. qhyper p m n k lower log *)
 val qhyper : float -> float -> float -> float -> int -> int -> float
+(* Hypergeometric probability density function. dhyper p m n k log *)
 val dhyper : float -> float -> float -> float -> int -> float
+(* Hypergeometric random numbers. rhyper m n k) *)
 val rhyper : float -> float -> float -> float
+(* Negative Binomial cumulative density function. pnbinom q size prob lower log *)
 val pnbinom : float -> float -> float -> int -> int -> float
+(* Negative Binomial quantile function. qnbinom p size prob lower log *)
 val qnbinom : float -> float -> float -> int -> int -> float
+(* Negative Binomial probability density function. dnbinom p size prob log *)
 val dnbinom : float -> float -> float -> int -> float
+(* Negative Binomial random numbers. rnbinom size prob *)
 val rnbinom : float -> float-> float
+(* Poisson cumulative density function. ppois q lambda lower log *)
 val ppois : float -> float -> int -> int -> float
+(* Poisson quantile function. qpois p lambda lower log *)
 val qpois : float -> float -> int -> int -> float
+(* Poisson probability density function. dpois p lambda log) *)
 val dpois : float -> float -> int -> float
+(* Poisson random numbers. rpois lambda *)
 val rpois : float-> float
+(* Weibull cumulative density function. pweibull q shape scale lower log *)
 val pweibull : float -> float -> float -> int -> int -> float
+(* Weibull quantile function. qweibull p shape scale lower log *)
 val qweibull : float -> float -> float -> int -> int -> float
+(* Weibull probability density function. dweibull p shape scale log *)
 val dweibull : float -> float -> float -> int -> float
+(* Weibull random numbers. rweibull shape scale *)
 val rweibull : float -> float-> float
+(* Logistic cumulative density function. plogis q location scale lower log *)
 val plogis : float -> float -> float -> int -> int -> float
+(* Logistic quantile function. qlogis p location scale lower log *)
 val qlogis : float -> float -> float -> int -> int -> float
+(* Logistic probability density function. dlogis p location scale log *)
 val dlogis : float -> float -> float -> int -> float
+(* Logistic random numbers. rlogis location scale *)
 val rlogis : float -> float-> float
+(* Non-central beta cumulative distribution function. pnbeta q shape1 shape2 ncp lower log *)
 val pnbeta : float -> float -> float -> float -> int -> int -> float
+(* Non-central beta quantile function. qnbeta p shape1 shape2 ncp lower log *)
 val qnbeta : float -> float -> float -> float -> int -> int -> float
+(* Non-central beta probability density function. dnbeta x shape1 shape2 ncp log *)
 val dnbeta : float -> float -> float -> float -> int -> float
+(* Non-central F cumulative distribution function. pnf q df1 df2 ncp lower log *)
 val pnf : float -> float -> float -> float -> int -> int -> float
+(* Non-central F quantile function. qnf p df1 df2 ncp lower log *)
 val qnf : float -> float -> float -> float -> int -> int -> float
+(* Non-central F probability density function. dnf x df1 df2 ncp log *)
 val dnf : float -> float -> float -> float -> int -> float
+(* Non-central Student t cumulative distribution function. pnt q df ncp lower log *)
 val pnt : float -> float -> float -> int -> int -> float
+(* Non-central Student t quantile function. qnt p df ncp lower log *)
 val qnt : float -> float -> float -> int -> int -> float
+(* Non-central Student t probability density function. dnt x df ncp log *)
 val dnt : float -> float -> float -> int -> float
+(* Studentised rangecumulative distribution function. ptukey q nmeans df nranges lower log *)
 val ptukey : float -> float -> float -> float -> int -> int -> float
+(* Studentised range quantile function. qtukey p nmeans df nranges lower log *)
 val qtukey : float -> float -> float -> float -> int -> int -> float
+(* Wilcoxon rank sum cumulative density function. pwilcox q m n lower log *)
 val pwilcox : float -> float -> float -> int -> int -> float
+(* Wilcoxon rank sum quantile function. qwilcox p m n lower log *)
 val qwilcox : float -> float -> float -> int -> int -> float
+(* Wilcoxon rank sum probability density function. dwilcox p m n log *)
 val dwilcox : float -> float -> float -> int -> float
+(* Wilcoxon rank sum random numbers. rwilcox m n *)
 val rwilcox : float -> float-> float
+(* Wilcoxon signed rank cumulative density function. psignrank q n lower log *)
 val psignrank : float -> float -> int -> int -> float
+(* Wilcoxon signed rank quantile function. qsignrank p n lower log *)
 val qsignrank : float -> float -> int -> int -> float
+(* Wilcoxon signed rank probability density function. dsignrank p n log) *)
 val dsignrank : float -> float -> int -> float
+(* Wilcoxon signed rank random numbers. rsignrank n *)
 val rsignrank : float-> float
+(* gammafn. gammafn x *)
 val gammafn : float-> float
+(* lgammafn. lgammafn x *)
 val lgammafn : float-> float
+(* psigamma. psigamma x y *)
 val psigamma : float -> float-> float
+(* digamma. digamma x *)
 val digamma : float-> float
+(* trigamma. trigamma x *)
 val trigamma : float-> float
+(* tetragamma. tetragamma x *)
 val tetragamma : float-> float
+(* pentagamma. pentagamma x *)
 val pentagamma : float-> float
+(* beta. beta x y *)
 val beta : float -> float-> float
+(* lbeta. lbeta x y *)
 val lbeta : float -> float-> float
+(* choose. choose n k *)
 val choose : float -> float-> float
+(* lchoose. lchoose n k *)
 val lchoose : float -> float-> float
+(* bessel_i. bessel_i x nu scaled) *)
 val bessel_i : float -> float -> float -> float
+(* bessel_j. bessel_j x nu *)
 val bessel_j : float -> float-> float
+(* bessel_k. bessel_k x nu scaled) *)
 val bessel_k : float -> float -> float -> float
+(* bessel_y. bessel_y x nu *)
 val bessel_y : float -> float-> float
+(* fmax2. fmax2 x y *)
 val fmax2 : float -> float-> float
+(* fmin2. fmin2 x y *)
 val fmin2 : float -> float-> float
+(* sign. sign x *)
 val sign : float-> float
+(* fprec. fprec x y *)
 val fprec : float -> float-> float
+(* fround. fround x y *)
 val fround : float -> float-> float
+(* fsign. fsign x y *)
 val fsign : float -> float-> float
+(* ftrunc. ftrunc x *)
 val ftrunc : float-> float
+(* cospi. cospi x *)
 val cospi : float-> float
+(* sinpi. sinpi x *)
 val sinpi : float-> float
+(* tanpi. tanpi x *)
 val tanpi : float-> float
+(* imin2. imin2 a b *)
 val imin2 : int -> int -> int
+(* imax2. imax2 a b *)
 val imax2 : int -> int -> int
+(* Normal cumulative density function. pnorm q mean sd lower log *)
+val pnorm : float -> float -> float -> int -> int -> float
+(* Normal quantile function. qnorm p mean sd lower log *)
+val qnorm : float -> float -> float -> int -> int -> float
+(* Normal probability density function. dnorm p mean sd log *)
+val dnorm : float -> float -> float -> int -> float
+(* Set random seed. set_seed a b *)
 val set_seed : int -> int -> unit
+(* log(1 + exp(x)). log1pexp x *)
 val log1pexp : float -> float
+(* Get random seed. get_seed a b *)
 val get_seed : unit -> int * int
 val lgammafn_sign : float -> float * int
+(* Sample from a multinomial distribution. rmultinom n prob *)
 val rmultinom : int -> float array -> int array
+(* log(1 + exp(x)). rf_log1pexp x *)
 val rf_log1pexp : float -> float
-val qgamma : float -> float -> float -> int -> int -> float
-val pgamma : float -> float -> float -> int -> int -> float
-val dgamma : float -> float -> float -> int -> float
+(* some additional functions *)
+(* Poisson confidence interval. poisson_ci x t alternative confLevel *)
 val poisson_ci : float -> float -> test_alternative -> float * float
+(* Poisson test. poisson_test x t r alternative *)
 val poisson_test: float -> float -> float -> test_alternative -> float
+(* utility for loop. for_loop f init (left,right) *)
 val for_loop : (int * 'a -> 'a) -> 'a -> int * int -> 'a
+(* utility to count. count predicate (left,right) *)
 val count : (int -> bool) -> int * int -> int
 #+end_src
 
