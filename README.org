@@ -9,11 +9,16 @@ This OCaml library provides dynamic and static bindings to the Rmath library.
 
 This interface requires the [[https://packages.debian.org/sid/r-mathlib][Rmath]] library, [[https://packages.debian.org/sid/pkg-config][pkg-config]] for getting C and linker flags for Rmath, [[https://packages.debian.org/sid/libffi-dev][libffi-dev]] for using Ctypes, and [[https://www.gnu.org/software/m4/m4.html][m4]] for code generation. To install the libraries on Ubuntu, use =apt install r-mathlib pkg-config libffi-dev m4=. The OCaml requirements can be installed through opam using =opam install ctypes ctypes-foreign=. 
 
+The function names were all made into lower case. There are a handfull of additional functions to demonstrate the use of the package, including =poisson.ci= and =poisson.test=.
+
+* Test examples
+
 #+BEGIN_SRC emacs-lisp :results silent :exports none
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ocaml . t)
    (sh . t)
+   (R . t)
    (emacs-lisp . t)))
 #+END_SRC
 
@@ -52,7 +57,7 @@ make dynamic
 rm -f rmath.ml rmath.mli
 rm -f rmath.cm* rmath.o
 rm -f test.o test.cm*
-m4   rmath-dynamic.ml.m4 > rmath.ml
+m4   -D LIBRMATH=/usr/lib/libRmath.so rmath-dynamic.ml.m4 > rmath.ml
 ocamlfind ocamlc -linkpkg -package ctypes.foreign rmath.ml test.ml \
 	-cclib "`pkg-config --libs libRmath`"
 1.959964
@@ -85,7 +90,29 @@ ocamlfind ocamlopt -linkpkg -package ctypes.foreign rmath.ml test.ml \
 0.474612
 #+end_example
 
-The signature is:
+In R, the tests would use the following code. 
+
+#+BEGIN_SRC R :session *R* :results verbatim :exports both
+RNGkind('Marsaglia')
+.Random.seed[2:3] <- c(1234L, 5678L)
+c(qnorm(0.975), 
+  log(gamma(3)), 
+  rmultinom(1, 1000, prob=c(0.1, 0.2, 0.7)), 
+  poisson.test(10,12)$p.value, 
+  poisson.test(10,8)$p.value)
+#+END_SRC
+
+#+RESULTS:
+: 1.95996398454005
+: 0.693147180559945
+: 89
+: 212
+: 699
+: 0.665693785433926
+: 0.474611803352614
+
+
+* Signature
 
 #+BEGIN_SRC ocaml :exports code
 type test_alternative = TwoSided | Less | Greater
