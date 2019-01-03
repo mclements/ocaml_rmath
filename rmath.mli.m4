@@ -36,6 +36,7 @@ val set_seed : int -> int -> unit
 val log1pexp : float -> float
 (* Get random seed. get_seed a b *)
 val get_seed : unit -> int * int
+(* log(gamma) with sign. lgammafn_sign x *)
 val lgammafn_sign : float -> float * int
 (* Sample from a multinomial distribution. rmultinom n prob *)
 val rmultinom : int -> float array -> int array

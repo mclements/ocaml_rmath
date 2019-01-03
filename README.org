@@ -1,11 +1,13 @@
-#+title: =ocaml_rmath=: Ocaml foreign function interface library for the Rmath library
+#+title: =ocaml_rmath=: OCaml foreign function interface library for the Rmath library
 #+author: Mark Clements
 
 #+OPTIONS: H:3 toc:nil num:nil
 
 * Outline
 
-This library provides dynamic and static bindings to the Rmath library. The interface uses code generated using m4.
+This OCaml library provides dynamic and static bindings to the Rmath library. 
+
+Aside from OCaml, this library also requires the [[https://packages.debian.org/sid/r-mathlib][Rmath]] library and [[https://www.gnu.org/software/m4/m4.html][m4]], which is used to generate code. The package was developed on Ubuntu 16.04 (64 bit) and Ubuntu 18.04 (32 bit): to install the [[https://packages.debian.org/sid/r-mathlib][Rmath]] library on Ubuntu, use =apt install r-mathlib=. 
 
 #+BEGIN_SRC emacs-lisp :results silent :exports none
 (org-babel-do-load-languages
@@ -403,6 +405,7 @@ val set_seed : int -> int -> unit
 val log1pexp : float -> float
 (* Get random seed. get_seed a b *)
 val get_seed : unit -> int * int
+(* log(gamma) with sign. lgammafn_sign x *)
 val lgammafn_sign : float -> float * int
 (* Sample from a multinomial distribution. rmultinom n prob *)
 val rmultinom : int -> float array -> int array
